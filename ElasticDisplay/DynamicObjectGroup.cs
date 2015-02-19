@@ -11,7 +11,7 @@ namespace ElasticDisplay
 {
     public class DynamicObjectGroup :CustomTypeDescriptor
     {
-        public string GroupName { get; }
+        public string GroupName { get; set; }
         private readonly IDictionary<string, Type> _propertyDictionary;
         private readonly PropertyDescriptorCollection _propertyDescriptorCollection;
         public DynamicObjectGroup(string groupName,IDictionary<string,Type> propertyDictionary)
