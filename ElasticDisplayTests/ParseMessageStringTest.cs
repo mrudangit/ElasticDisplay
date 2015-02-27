@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,14 +21,17 @@ namespace ElasticDisplayTests
 
             for (int i = 0; i < 10; i++)
             {
-                var d = new Dictionary<string, string>();
+               
 
-
+                
                 var stopWatch = new Stopwatch();
-
+                var nv = new Dictionary<string, string>();
                 stopWatch.Start();
-                FillFromString(data, d);
+                
+                FillFromString(data,nv);
                 stopWatch.Stop();
+
+              
 
                 var optimized = stopWatch.Elapsed;
                 Console.WriteLine("RUN #:{0} Method 1: {1} ",i, stopWatch.Elapsed);
@@ -57,8 +61,10 @@ namespace ElasticDisplayTests
 
 
 
-        private static void FillFromString(String s,IDictionary<string,string> nameValueDictionary )
+        private static void FillFromString(String s,Dictionary<string,string> nv)
         {
+
+            
             int l = (s != null) ? s.Length : 0;
             int i = 0;
 
@@ -102,15 +108,17 @@ namespace ElasticDisplayTests
                     value = s.Substring(si, i - si);
                 }
 
-           
 
 
-                nameValueDictionary[name] = value;
+
+                nv[name] = value;
 
               
 
                 i++;
             }
+
+         
         }
 
     }
