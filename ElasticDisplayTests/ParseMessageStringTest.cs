@@ -10,6 +10,14 @@ namespace ElasticDisplayTests
     [TestClass]
     public class ParseMessageStringTest
     {
+
+        [TestMethod]
+        public void TestFilterString()
+        {
+            
+
+        }
+
         [TestMethod]
         public void ParseAmpsString()
         {
