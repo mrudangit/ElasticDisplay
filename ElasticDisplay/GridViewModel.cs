@@ -18,6 +18,8 @@ namespace ElasticDisplay
 
             var s = LoadSChema("PositionSchema.xml");
             _rowCollection = new ElasticRowCollection(null, new List<Schema>() {s});
+
+
         }
 
 
