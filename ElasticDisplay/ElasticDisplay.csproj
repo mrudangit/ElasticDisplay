@@ -63,6 +63,8 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AmpsMessageListener.cs" />
+    <Compile Include="AmpsService.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="ElasticRowCollection.cs" />
     <Compile Include="GridViewModel.cs" />
