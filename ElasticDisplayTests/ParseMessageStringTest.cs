@@ -25,10 +25,9 @@ namespace ElasticDisplayTests
 
                 
                 var stopWatch = new Stopwatch();
-                var nv = new Dictionary<string, string>();
                 stopWatch.Start();
                 
-                FillFromString(data,nv);
+                var nv = FillFromString(data);
                 stopWatch.Stop();
 
               
@@ -61,36 +60,37 @@ namespace ElasticDisplayTests
 
 
 
-        private static void FillFromString(String s,Dictionary<string,string> nv)
+        private static IDictionary<string,string> FillFromString(String data)
         {
 
+            var nv = new Dictionary<string, string>();
             
-            int l = (s != null) ? s.Length : 0;
-            int i = 0;
+            var length = !string.IsNullOrEmpty(data) ? data.Length : 0;
+            int index = 0;
 
-            while (i < l)
+            while (index < length)
             {
 
            
 
-                int si = i;
-                int ti = -1;
+                int startIndex = index;
+                int i = -1;
 
-                while (i < l)
+                while (index < length)
                 {
-                    char ch = s[i];
+                    var ch = data[index];
 
                     if (ch == '=')
                     {
-                        if (ti < 0)
-                            ti = i;
+                        if (i < 0)
+                            i = index;
                     }
                     else if (ch == (char)1)
                     {
                         break;
                     }
 
-                    i++;
+                    index++;
                 }
 
                 // extract the name / value pair
@@ -98,27 +98,22 @@ namespace ElasticDisplayTests
                 String name = null;
                 String value = null;
 
-                if (ti >= 0)
+                if (i >= 0)
                 {
-                    name = s.Substring(si, ti - si);
-                    value = s.Substring(ti + 1, i - ti - 1);
+                    name = data.Substring(startIndex, i - startIndex);
+                    value = data.Substring(i + 1, index - i - 1);
                 }
                 else
                 {
-                    value = s.Substring(si, i - si);
+                    value = data.Substring(startIndex, index - startIndex);
                 }
-
-
-
 
                 nv[name] = value;
 
-              
-
-                i++;
+                index++;
             }
+            return nv;
 
-         
         }
 
     }
