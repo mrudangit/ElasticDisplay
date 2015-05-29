@@ -63,15 +63,12 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Compile Include="AmpsContext.cs" />
     <Compile Include="AmpsMessageListener.cs" />
-    <Compile Include="AmpsQueryProvider.cs" />
+    <Compile Include="AmpsParseUtils.cs" />
     <Compile Include="AmpsService.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="ElasticRowCollection.cs" />
-    <Compile Include="Evaluator.cs" />
     <Compile Include="GridViewModel.cs" />
-    <Compile Include="QueryableAmpsData.cs" />
     <Compile Include="Schema.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
