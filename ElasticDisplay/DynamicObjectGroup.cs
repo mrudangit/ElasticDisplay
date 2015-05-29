@@ -19,16 +19,7 @@ namespace ElasticDisplay
             GroupName = groupName;
             _propertyDictionary = propertyDictionary;
 
-            var props = new List<DynamicPropertyDescriptor>();
-            foreach (KeyValuePair<string, Type> keyValuePair in propertyDictionary)
-            {
-                
-                var p =new DynamicPropertyDescriptor(groupName,keyValuePair.Key, keyValuePair.Value, null);
-                props.Add(p);
-
-            }
-
-            _propertyDescriptorCollection = new PropertyDescriptorCollection(props.ToArray());
+            _propertyDescriptorCollection = new PropertyDescriptorCollection(propertyDictionary.Select(keyValuePair => new DynamicPropertyDescriptor(groupName, keyValuePair.Key, keyValuePair.Value, null)).ToArray());
         }
 
 
@@ -83,15 +74,51 @@ namespace ElasticDisplay
             }
         }
 
-        private Random random = new Random();
+        private readonly Random _random = new Random();
         private object GetSampleData(Type t)
         {
-            switch (t.Name)
+            switch (Type.GetTypeCode(t))
             {
-                case "String":
-                    return string.Format("StringData-{0}", random.Next(1, 100));
-                case "Int32":
-                    return random.Next(1, 1000);
+                case TypeCode.Empty:
+                    break;
+                case TypeCode.Object:
+                    break;
+                case TypeCode.DBNull:
+                    break;
+                case TypeCode.Boolean:
+                    break;
+                case TypeCode.Char:
+                    break;
+                case TypeCode.SByte:
+                    break;
+                case TypeCode.Byte:
+                    break;
+                case TypeCode.Int16:
+                    break;
+                case TypeCode.UInt16:
+                    break;
+                case TypeCode.Int32:
+                    return _random.Next(1, 1000);
+                    break;
+                case TypeCode.UInt32:
+                    break;
+                case TypeCode.Int64:
+                    break;
+                case TypeCode.UInt64:
+                    break;
+                case TypeCode.Single:
+                    break;
+                case TypeCode.Double:
+                    break;
+                case TypeCode.Decimal:
+                    break;
+                case TypeCode.DateTime:
+                    break;
+                case TypeCode.String:
+                    return string.Format("StringData-{0}", _random.Next(1, 100));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return null;
