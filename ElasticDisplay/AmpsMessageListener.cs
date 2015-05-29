@@ -5,7 +5,7 @@ namespace ElasticDisplay
 {
     public class AmpsMessageListener:MessageHandler
     {
-
+        // Per topic - > [ sowKey ] -> messsage
         private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, Message>> _ampsMessages = new ConcurrentDictionary<string, ConcurrentDictionary<string, Message>>();
 
         public void invoke(Message message)

@@ -11,7 +11,7 @@ namespace ElasticDisplay
 {
     public class GridViewModel
     {
-        private ElasticRowCollection _rowCollection;
+        private readonly ElasticRowCollection _rowCollection;
 
         public GridViewModel()
         {

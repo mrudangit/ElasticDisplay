@@ -46,11 +46,7 @@ namespace ElasticDisplay
 
         public void AddNewRow()
         {
-            IList<DynamicObjectGroup> grps = new List<DynamicObjectGroup>();
-            foreach (KeyValuePair<string, PropertyDescriptorCollection> pair in _groupPropertyDescriptorCollections)
-            {
-                grps.Add(new DynamicObjectGroup(pair.Key,pair.Value,true));
-            }
+            IList<DynamicObjectGroup> grps = _groupPropertyDescriptorCollections.Select(pair => new DynamicObjectGroup(pair.Key, pair.Value, true)).ToList();
 
             this.Add(new ElasticRow(grps));
 

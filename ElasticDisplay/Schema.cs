@@ -27,15 +27,7 @@ namespace ElasticDisplay
 
         public List<DynamicPropertyDescriptor> GetPropertyDesciptors()
         {
-            var l = new List<DynamicPropertyDescriptor>();
-            foreach (var column in Columns)
-            {
-                l.Add(new DynamicPropertyDescriptor(Name,column.Name, Type.GetType(column.Type),null));
-            }
-
-            return l;
+            return Columns.Select(column => new DynamicPropertyDescriptor(Name, column.Name, Type.GetType(column.Type), null)).ToList();
         }
-
-
     }
 }

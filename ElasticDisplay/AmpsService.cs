@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System.Collections.Concurrent;
 using AMPS.Client;
 
 namespace ElasticDisplay
@@ -14,6 +9,7 @@ namespace ElasticDisplay
         private readonly string _ampsUrl;
         private readonly string _name;
         private Client _client;
+        private readonly ConcurrentDictionary<string, AmpsMessageListener>  _topicMessageListeners = new ConcurrentDictionary<string, AmpsMessageListener>();
 
         public AmpsService(string url,string name)
         {
@@ -30,16 +26,31 @@ namespace ElasticDisplay
         }
 
 
-        public string  Subscribe(string topic, string filter)
+        private static string CreateCorrelationId(string topic)
         {
             var guid = Guid.NewGuid().ToString();
+            
+            return string.Format("{0}-{1}-{2}-{3}", topic, Environment.MachineName, Environment.UserName, guid);
+
+
+        }
+
+
+        public string  Subscribe(string topic, string filter)
+        {
+            var id = CreateCorrelationId(topic);
             var command = new Command(Message.Commands.SOWAndSubscribe);
+
             command.setOptions(Message.Options.OOF);
             command.setOptions(Message.Options.SendKeys);
-            command.setCorrelationId(guid);
-            _client.sowAndSubscribe(new AmpsMessageListener(), topic, filter);
+            
 
-            return guid;
+            command.setCorrelationId(id);
+            var msgListener = new AmpsMessageListener();
+            _client.sowAndSubscribe(msgListener, topic, filter);
+            _topicMessageListeners[topic] = msgListener;
+
+            return id;
         }
 
 
