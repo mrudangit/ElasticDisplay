@@ -8,7 +8,6 @@ namespace ElasticDisplay
 {
     public class AmpsParseUtils
     {
-
         public IDictionary<string, string> ParseAmpsMessagetoDictionary(string data)
         {
 
