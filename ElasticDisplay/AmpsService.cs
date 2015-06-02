@@ -36,7 +36,7 @@ namespace ElasticDisplay
         }
 
 
-        public string  Subscribe(string topic, string filter)
+        public string  Subscribe(string topic, string filter= null)
         {
             var id = CreateCorrelationId(topic);
             var command = new Command(Message.Commands.SOWAndSubscribe);
