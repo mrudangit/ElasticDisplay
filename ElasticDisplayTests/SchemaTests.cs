@@ -26,9 +26,9 @@ namespace ElasticDisplayTests
 
             s.Columns = new List<Column>();
 
-            s.Columns.Add(new Column() {Name = "Account",Type = "String"});
-            s.Columns.Add(new Column() { Name = "Cusip", Type = "String" });
-            s.Columns.Add(new Column() { Name = "Quantity", Type = "Int32" });
+            s.Columns.Add(new Column() {Name = "Account",TypeCode = TypeCode.String});
+            s.Columns.Add(new Column() { Name = "Cusip", TypeCode=TypeCode.String});
+            s.Columns.Add(new Column() { Name = "Quantity",TypeCode = TypeCode.Int32});
 
 
 
@@ -37,6 +37,7 @@ namespace ElasticDisplayTests
 
             var str = new StringWriter();
             var sxmltr = new XmlTextWriter(str);
+            sxmltr.Formatting= Formatting.Indented;
             ser.WriteObject(sxmltr, s);
 
 
@@ -66,6 +67,8 @@ namespace ElasticDisplayTests
             var s = obj as Schema;
 
             Debug.Assert(s != null);
+            Debug.Assert(s.Columns[0].TypeCode == TypeCode.String);
+            Console.WriteLine(s.ToString());
         }
 
     }

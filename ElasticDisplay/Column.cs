@@ -7,13 +7,27 @@ using System.Threading.Tasks;
 
 namespace ElasticDisplay
 {
+
+
     [DataContract]
     public class Column
     {
+    
+        private TypeCode _typeCode;
+
         [DataMember]
         public string Name { get; set; }
 
+       
+
         [DataMember]
-        public string Type { get; set; }
+        public TypeCode TypeCode
+        {
+            get { return _typeCode; }
+            set
+            {
+                _typeCode = value;
+            }
+        }
     }
 }

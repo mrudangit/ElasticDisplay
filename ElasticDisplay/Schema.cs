@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Automation.Peers;
-using System.Windows.Documents.DocumentStructures;
+using System.Xml;
 
 namespace ElasticDisplay
 {
@@ -13,6 +11,19 @@ namespace ElasticDisplay
     [DataContract]
     public class Schema
     {
+        public override string ToString()
+        {
+            DataContractSerializer ser =
+                new DataContractSerializer(typeof(Schema));
+
+            var str = new StringWriter();
+            var sxmltr = new XmlTextWriter(str);
+            sxmltr.Formatting = Formatting.Indented;
+            ser.WriteObject(sxmltr, this);
+
+
+            return str.ToString();
+        }
 
         public Schema()
         {
@@ -22,12 +33,16 @@ namespace ElasticDisplay
         public String Name { get; set; }
 
         [DataMember]
-        public IList<Column> Columns;
+        public IList<Column> Columns { get; set; }
+
+        [DataMember]
+        public IList<Column> KeyColumns { get; set; }
+
 
 
         public List<DynamicPropertyDescriptor> GetPropertyDesciptors()
         {
-            return Columns.Select(column => new DynamicPropertyDescriptor(Name, column.Name, Type.GetType(column.Type), null)).ToList();
+            return Columns.Select(column => new DynamicPropertyDescriptor(Name, column.Name, TypeUtils.GetType(column.TypeCode), null)).ToList();
         }
     }
 }

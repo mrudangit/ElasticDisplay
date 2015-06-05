@@ -9,7 +9,7 @@ namespace ElasticDisplay
         private readonly string _ampsUrl;
         private readonly string _name;
         private Client _client;
-        private readonly ConcurrentDictionary<string, AmpsMessageListener>  _topicMessageListeners = new ConcurrentDictionary<string, AmpsMessageListener>();
+   
 
         public AmpsService(string url,string name)
         {
@@ -48,8 +48,25 @@ namespace ElasticDisplay
             command.setCorrelationId(id);
             var msgListener = new AmpsMessageListener();
             _client.sowAndSubscribe(msgListener, topic, filter);
-            _topicMessageListeners[topic] = msgListener;
+        
+            return id;
+        }
 
+
+        public string Subscribe(string topic, Action<Message> messageAction, string filter = null)
+        {
+            var id = CreateCorrelationId(topic);
+            var command = new Command(Message.Commands.SOWAndSubscribe);
+
+            command.setOptions(Message.Options.OOF);
+            command.setOptions(Message.Options.SendKeys);
+
+
+            command.setCorrelationId(id);
+            
+            _client.sowAndSubscribe(messageAction, topic, filter);
+            
+       
             return id;
         }
 
