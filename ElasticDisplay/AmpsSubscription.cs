@@ -63,4 +63,17 @@ namespace ElasticDisplay
             });
         }
     }
+
+    public class AnonymousDisposable : IDisposable
+    {
+        public AnonymousDisposable(Action action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            
+        }
+    }
 }
